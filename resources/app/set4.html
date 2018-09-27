@@ -1,0 +1,215 @@
+<html>
+    <head>
+        <style>
+            body {
+            background-image:    url("final.png");
+            background-size:     cover;                      /* <------ */
+            background-repeat:   no-repeat;
+            background-position: center center;              /* optional, center the image */
+        }
+            .xno{
+                padding: 20px;
+                border: 10px 0ch black;
+                font-size: 60px;
+                background-color: antiquewhite;
+            }
+            #demo,#result{
+                font-size: 60px;
+                font-family: cursive;
+            }
+            #mytablex{
+                border: 5px solid sienna;
+
+            }
+            #rules{
+              float: left;
+              font-size: 20px;
+              border:thick solid royalblue;
+
+            }
+            #score{
+                float: right;
+                font-size: 36px;
+            }
+            </style>
+
+        <script>
+           qna=["<b>1.TECHNICAL</b><br/>What is the name of<br/>of the device that<br/>that converts digital<br/>signals to analogsignals?<br/><br/>a)Router<br/>b)Switch<br/>c)Modem<br/>d)None of the above<br/>",
+           "<b>2.P&C</br>From a group of</br> ten professors and six </br>assistant professors,a management </br>institute desires to send </br>a delegation of eight persons</br> consisting of five professors</br> and three assistant professors</br> to the IIMs annual meet.</br>If Satish a science proffesor</br> refuses to be in the delegation</br> if assistant professor </br>Venu,an arts professor is</br> included in the delegation </br>then how many ways can</br> the delegation be formed</br></br>a)9c4 * 4c3</br>b)9c5 * 4c2</br>c)(10c5 * 6c3) - (9c4 * 5c2)</br>d)(9c4 * 4c3)+(9c5 * 4c2)",
+           "<b>3.PUZZLE</b></br>One Grandfather,One Father</br> and One Grand Son.</br>Sum of their ages</br> is 140years.Grand son's</br> age in months is</br> equal to Grandfathers age</br> in years Grand son's age</br> in days is equal to Father's age</br> in weeks.Which of the </br>following is correct?</br></br>I.Grandfather's age is 70</br>II.Father's age is 49</br>III.Grandson's age is 8</br>IV.None of the above",
+           "<b>4.PUZZLE</b></br>Four people need to </br>cross a rickety bridge at</br> night.Unfortunately,they have</br> only one torch and the bridge </br>is too dangerous to cross </br>without one.The bridge is</br> only strong enough to support </br>two people at a time.Not </br>all people take the same</br> time to cross the bridge.</br>Times for each person:</br>1min,2mins,7mins and 10mins.</br>What is the shortest time </br>needed for all four of</br> them to cross the bridge?</br></br>I.24min</br>II.21min</br>III.18min</br>IV.17min",
+           "<b>5.STATEMENTS</b><br/>All nibs are tips.<br/>Many nibs are ribs<br/><br/><b>CONCLUSIONS:</b><br/>I.Some nibs are tips<br/>II.Some tips are nibs<br/>III.All nibs are ribs<br/>IV.SOme nibs are not ribs<br/>1)Only I follows<br/>2)Only II follows<br/>3)II and either III or IV follows<br/>4)I and II follows<br/>5)I and II and either III or IV follows",
+           "<b>6.P&C</b></br>Consider the word antibiotic</br>.How many arrangements</br> can be made by taking </br>four letters from the</br> word?</br></br>a)1728</br>b)1230</br>c)1444</br>d)1634",
+           "<b>7.TECHNICAL</b><br/>computer resolution<br/>measures?<br/><br/>a)size of the screen<br/>b)shape of the screen<br/>c)number of pixels<br/>d)number of colors it supports",
+           "<b>8.PUZZLE</b></br>2+3=8,</br>3+7=27,</br>4+5=32,</br>5+8=60,</br>6+7=72,</br>7+8=??</br>",
+           "<b>9.STATEMENTS</b><br/>Some trees are sharks<br/>Some sharks are balloons<br/><br/><b>CONCLUSIONS:</b><br/>I.All balloons are sharks<br/>II.All balloons are trees<br/>III.Some trees are balloons<br/>IV.No tree is a balloon<br/><br/>1)Only I follows<br/>2)Only II and III follow<br/>3)Only either I or III follows<br/>4)Only either I or IV follows<br/>5)Only either III or IV follows<br/>"
+           ];
+           ans=["c","c","2","4","3","b","c","98","5"];
+            var qid,ques,opt,ip1;
+            var boxi=document.getElementsByClassName("xno");
+            var corr=0;
+            //const prompt = require('electron-prompt');
+          //const smalltalk=require('smalltalk');
+
+
+            var countDownDate = new Date();
+            var t2=new Date(countDownDate);
+            t2.setMinutes(countDownDate.getMinutes()+30);
+            countDownDate=t2;
+            var en=true;
+            var x = setInterval(function() {
+                // Get todays date and time
+                var now = new Date().getTime();
+
+                // Find the distance between now an the count down date
+                var distance = countDownDate - now;
+
+                // Time calculations for days, hours, minutes and seconds
+                //var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                //var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                // Display the result in the element with id="demo"
+                document.getElementById("demo").innerHTML = minutes + "m " + seconds + "s ";
+
+                // If the count down is finished, write some text
+                if (distance < 0) {
+                    clearInterval(x);
+                    document.getElementById("demo").innerHTML = "EXPIRED";
+                    en=false;
+
+                        }
+                        }, 1000);
+            var k=0,c=0;
+            function toggle(elem){
+                            if(en==true){
+                                if(document.getElementById(elem.id).innerHTML=="+"){
+                                setquestion(elem.id);
+
+                          
+                            }
+                            else{
+                                ip1.disabled=true;
+                            document.getElementById("btn1").disabled=true;
+                            }
+                        }
+                    }
+                        function check(){
+                          let countcheck=0;
+                                if(boxi[0].innerHTML=="o"&&boxi[1].innerHTML=="o"&&boxi[2].innerHTML=="o")
+                                    countcheck++;
+                                if(boxi[3].innerHTML=="o"&&boxi[4].innerHTML=="o"&&boxi[5].innerHTML=="o")
+                                        countcheck++;
+                                if(boxi[6].innerHTML=="o"&&boxi[7].innerHTML=="o"&&boxi[8].innerHTML=="o")
+                                        countcheck++;
+                                if(boxi[0].innerHTML=="o"&&boxi[3].innerHTML=="o"&&boxi[6].innerHTML=="o")
+                                    countcheck++;
+                                if(boxi[1].innerHTML=="o"&&boxi[4].innerHTML=="o"&&boxi[7].innerHTML=="o")
+                                        countcheck++;
+                                if(boxi[2].innerHTML=="o"&&boxi[5].innerHTML=="o"&&boxi[8].innerHTML=="o")
+                                        countcheck++;
+                                if(boxi[0].innerHTML=="o"&&boxi[4].innerHTML=="o"&&boxi[8].innerHTML=="o")
+                                        countcheck++;
+                                if(boxi[2].innerHTML=="o"&&boxi[4].innerHTML=="o"&&boxi[6].innerHTML=="o")
+                                        countcheck++;
+                                document.getElementById("score").innerHTML="<p>correct answer-:"+corr+"</p><p>number of lines completed-:" + countcheck+"</p>"
+                                if(countcheck==2)
+                                    endgame();
+
+
+
+                        }
+                        function endgame(){
+                            en=false;
+                            document.getElementById("result").innerHTML="You won!! Time left"+document.getElementById("demo").innerHTML;
+                            document.getElementById("demo").style.visibility="hidden";
+
+                        }
+                        function setquestion(idk){
+                            ques=document.getElementById("q1");
+                            opt=document.getElementById("options");
+                            ip1=document.getElementById("ip1");
+           
+                            qid=idk-1;
+                            console.log(qna[qid]);
+                            ques.innerHTML=qna[qid];
+                            ip1.disabled=false;
+                            document.getElementById("btn1").disabled=false;
+                            
+
+                        }
+                        function eval(){
+                            k=ip1.value;
+                            console.log(k);
+                            if(k!=null){
+                                c++;
+                              if(k.toLowerCase()==ans[qid]){
+                                document.getElementById(qid+1).innerHTML="o";
+                                corr++;
+                              }
+                            else
+                                document.getElementById(qid+1).innerHTML="x";
+                                ip1.value='';
+                                ip1.disabled=true;
+                            document.getElementById("btn1").disabled=true;
+
+                                
+                            }
+                           check();
+                            if(c==9){
+                                en=false;
+                                }
+                            }
+
+                        
+
+
+
+
+
+        </script>
+    </head>
+    <body>
+
+            <center>
+                <p id="demo"></p>
+                <p id="result"></p>
+
+            <table id="mytablex">
+                    <tr>
+                      <th><button id="1" class="xno" onclick="toggle(this)" >+</button></th>
+                      <th><button id="2" class="xno" onclick="toggle(this)" >+</button></th>
+                      <th><button id="3" class="xno" onclick="toggle(this)" >+</button></th>
+                    </tr>
+                    <div id="score">
+                            <p>correct answer-:0</p>
+                            <p>number of lines completed-:0</p>
+                          </div>
+                          <div id="Rules">
+                               <p id="q1"></p>
+                               <p id="options"></p>
+                               <form>
+                               <input type="text" id="ip1">
+                               </form>
+                               <button id="btn1" onclick="eval()" disabled>submit</button>
+                              </div>
+
+
+                    <tr>
+                      <td><button id="4" class="xno" onclick="toggle(this)" >+</button></td>
+                      <td><button id="5" class="xno" onclick="toggle(this)">+</button></td>
+                      <td><button id="6" class="xno" onclick="toggle(this)">+</button></td>
+                    </tr>
+                    <tr>
+                      <td><button id="7" class="xno" onclick="toggle(this)">+</button></td>
+                      <td><button id="8" class="xno" onclick="toggle(this)">+</button></td>
+                      <td><button id="9" class="xno" onclick="toggle(this)">+</button></td>
+                    </tr>
+            </table>
+                </center>
+
+
+
+    </body>
+</html>
